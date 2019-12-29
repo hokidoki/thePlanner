@@ -1,0 +1,7 @@
+#backgroundDiv{
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://i.pinimg.com/originals/01/09/37/0109373718318dbe77401316e87cdc4d.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

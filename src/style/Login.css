@@ -1,0 +1,41 @@
+.LoginPage{
+    width: 60%;
+    margin: 0 auto;
+    border: 1px solid white;
+    box-sizing: border-box;
+    height: 100%;
+    position: relative;
+}
+
+#loginHeaderTitle{
+    font-size: 4rem;
+    width: 80%;
+    margin : 0 auto;
+    text-align: center;
+    color: white;
+}
+
+#loginClock{
+    width: 40%;
+    margin: 0 auto;
+    color : white;
+    text-align: center;
+}
+#clock{
+    font-size: 2.5rem;
+}
+
+.mainLoginCompoent{
+    width: 40%;
+    margin: 0 auto;
+    position: absolute;
+    left: 30%;
+    bottom: 10%;
+}
+.loginComponentButton{
+    width: 100%;
+}
+
+#loginButton{
+    margin-bottom: 10px;
+}
