@@ -1,14 +1,25 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 export default class Clock extends Component {
+
+    componentDidMount(){
+        this._isMount = true;
+    }
+
     state = {
         now : moment().format('YYYY-MM-DD HH-mm-ss')
     }
+
+    componentWillUnmount(){
+        this._isMount = false
+    }
     render() {
         setTimeout(()=>{
-            this.setState({
-                now : moment().format('YYYY-MM-DD HH-mm-ss')
-            })
+            if(this._isMount){
+                this.setState({
+                    now : moment().format('YYYY-MM-DD HH-mm-ss')
+                })
+            }
         },1000)
         return (
             <div id="loginClock" className="clockDiv">

@@ -4,6 +4,7 @@ import { Button,Form } from 'semantic-ui-react'
 import { signIn } from '../store/action/account';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {withRouter} from 'react-router-dom'
 
 class loginBox extends Component {
     state = { 
@@ -29,6 +30,10 @@ class loginBox extends Component {
         }
         this.props.signIn(id,password);
     }
+
+    goToSignUpForm = ()=>{
+        this.props.history.push("/signUp");
+    }
     render() {
         return (
             <div className="mainLoginCompoent">
@@ -43,7 +48,7 @@ class loginBox extends Component {
                     </Form.Field>
                     <Button id="loginButton" className="loginComponentButton" type='submit' onClick={this.signIn}>로그인</Button>
                 </Form>
-                <Button className="loginComponentButton" >회원가입</Button>
+                <Button className="loginComponentButton" onClick={this.goToSignUpForm} >회원가입</Button>
             </div>
         )
     }
@@ -54,4 +59,4 @@ const mapDispatchToProps = (dispatch) =>{
         signIn : bindActionCreators(signIn,dispatch)
     }
 }
-export default connect(null, mapDispatchToProps)(loginBox)
+export default connect(null, mapDispatchToProps)(withRouter(loginBox))
