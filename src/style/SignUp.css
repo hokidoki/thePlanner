@@ -80,3 +80,15 @@
 .termCheck{
     margin-left: 10px;
 }
+
+#signUpGobackLabel{
+    color: rgb(182, 182, 182);
+    position : absolute;
+    right : 50px;
+    margin-top: -20px;
+    cursor: pointer;   
+}
+#signUpGobackLabel:hover{
+    color: white;
+    border-bottom: 1px solid white;
+}

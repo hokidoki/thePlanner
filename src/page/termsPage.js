@@ -71,7 +71,7 @@ export default class TermsPage extends Component {
 class Term  extends Component {
 
     state = {
-        show : true,
+        show : false,
     }
     
     showThisTerm = () => {
