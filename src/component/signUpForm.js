@@ -33,16 +33,15 @@ class signUpForm extends Component {
     
 
     onChange = (e)=>{
-        if(e.target.name === "email" && e.target.value.length > 6){
-            let checker = "이메일 양식에 맞게 작성해주세요";
-            if(this.emailChecker(e.target.value)){
-                checker = true;
-            };
+        let checker = "";
+        let checkerValue = false;
 
-            this.setState({
-                [e.target.name] : e.target.value,
-                emailChecker : checker
-            })
+        if(e.target.name === "email" && e.target.value.length > 6){
+            checker = "emailChecker";
+            checkerValue = "이메일 양식에 맞게 작성해주세요";
+            if(this.emailChecker(e.target.value)){
+                checkerValue = true;
+            };
         }
 
         if(e.target.name === 'id' && e.target.value.length > 4){
@@ -62,21 +61,33 @@ class signUpForm extends Component {
             return;
         }
 
-        this.setState({
-            [e.target.name] : e.target.value
-        })
-
-        if(e.target.name === "password" || e.target.name === "password_v"){
-            if(this.state.password === this.state.password_v){
-                this.setState({
-                    passwordChecker : true,
-                })
+        if(e.target.name === "nickname"){
+            checker ="nicknameChecker";
+            if(e.target.value.length > 2){
+                checkerValue = true;
             }else{
-                this.setState({
-                    passwordChecker : "비밀번호가 일치하지 않습니다."
-                })
+                checkerValue = "별명은 두 글자 이상입니다.";
             }
         }
+
+        if(e.target.name === "password" || e.target.name === "password_v"){
+            const name = e.target.name;
+            checker ="passwordChecker";
+            checkerValue = "비밀번호가 일치하지 않습니다.";
+
+            if(name === "password" && e.target.value === this.state.password_v){
+                checkerValue = true;
+            }else if(name === "password_v" && e.target.value === this.state.password){
+                checkerValue = true;
+            }
+        }
+
+        this.setState({
+            [e.target.name] : e.target.value,
+            [checker] : checkerValue
+        })
+        
+        
         
     }
 
@@ -124,6 +135,8 @@ class signUpForm extends Component {
 
 
     render() {
+        console.log(this.state);
+        const {idChecker, passwordChecker, nicknameChecker, emailChecker} = this.state;
         return (
             <div className="SignUpPage">
                 <label id="signUpGobackLabel" onClick={this.goBack}>닫기</label>
@@ -131,19 +144,24 @@ class signUpForm extends Component {
                     <h3 className="accountH3">회원 가입</h3>
                     <i className="fa fa-user accIcon"></i>
                     <input className="accountInput" name="nickname" onChange={this.onChange} placeholder="별명"></input>
+                    { nicknameChecker === true || nicknameChecker === false ? null : <label className="accWarning">{nicknameChecker}</label>}
                     <i className="fa fa-user accIcon"></i>
                     <input className="accountInput" name="id" onChange={this.onChange} placeholder="아이디"></input>
+                    {idChecker === true || idChecker === false ? null : <label className="accWarning">{idChecker}</label>}
                     <i className="fa fa-key accIcon"></i>
                     <input className="accountInput" name="password" onChange={this.onChange} placeholder="비밀번호"></input>
                     <i className="fa fa-key accIcon"></i>
                     <input className="accountInput" name="password_v" onChange={this.onChange} placeholder="비밀번호 재확인"></input>
+                    {passwordChecker === true || passwordChecker === false ? null : <label className="accWarning">{passwordChecker}</label>}
                     <i className="fa fa-envelope accIcon"></i>
                     <input className="accountInput" name="email" onChange={this.onChange} placeholder="이메일"></input>
+                    {emailChecker === true || emailChecker === false ? null : <label className="accWarning">{emailChecker}</label>}
                     <TermsPage termsAgreeAll={this.termsAgreeAll}></TermsPage>
-                <button>회원가입</button>
+                    <div class="col" onClick={this.signUp}>
+			            <a href="#" class="btn btn-dark-blue" >회원 가입</a>		
+		            </div>
                 </div>
             </div>
-
         )
     }
 }
