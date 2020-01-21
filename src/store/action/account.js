@@ -21,3 +21,24 @@ export const signIn = (id,password) =>{
         })
     }
 }
+
+const signUpRequest = createAction(type.SIGN_UP_REQUEST);
+const signUpSuccess = createAction(type.SIGN_UP_SUCCESS);
+const signUpFailed = createAction(type.SIGN_UP_FAILED);
+
+export const signUp = (id, password, nickname, email, terms) =>{
+    return (dispatch,getState) =>{
+        dispatch(signUpRequest());
+        axios.post(`${getState().pub.requestDomain}/signup`,{
+            id : id,
+            password : password,
+            nickname : nickname,
+            email : email,
+            terms : terms
+        }).then(()=>{
+            dispatch(signUpSuccess());
+        }).catch((err)=>{
+            dispatch(signUpFailed(err));
+        })
+    }
+}

@@ -97,7 +97,7 @@ class signUpForm extends Component {
     }
 
     signUp = ()=>{
-        const { id, password, password_v, nickname, email, termsAgreeAll} = this.state;
+        const { id, password, nickname, email, termsAgreeAll} = this.state;
         let {idChecker, passwordChecker, nicknameChecker, emailChecker} = this.state;
         
         if(id.length > 4){
@@ -135,30 +135,37 @@ class signUpForm extends Component {
 
 
     render() {
-        console.log(this.state);
-        const {idChecker, passwordChecker, nicknameChecker, emailChecker} = this.state;
+        const {idChecker, passwordChecker, nicknameChecker, emailChecker,termsAgreeAll} = this.state;
         return (
             <div className="SignUpPage">
                 <label id="signUpGobackLabel" onClick={this.goBack}>닫기</label>
                 <div className="accountForm">
                     <h3 className="accountH3">회원 가입</h3>
-                    <i className="fa fa-user accIcon"></i>
-                    <input className="accountInput" name="nickname" onChange={this.onChange} placeholder="별명"></input>
-                    { nicknameChecker === true || nicknameChecker === false ? null : <label className="accWarning">{nicknameChecker}</label>}
-                    <i className="fa fa-user accIcon"></i>
-                    <input className="accountInput" name="id" onChange={this.onChange} placeholder="아이디"></input>
+                    <div className="inputDiv">
+                        <i className="fa fa-user accIcon"></i>
+                        <input className="accountInput" name="nickname" onChange={this.onChange} placeholder="별명"></input>
+                        { nicknameChecker === true || nicknameChecker === false ? null : <label className="accWarning">{nicknameChecker}</label>}
+                    </div>
+                    <div className="inputDiv">
+                        <i className="fa fa-user accIcon"></i>
+                        <input className="accountInput" name="id" onChange={this.onChange} placeholder="아이디"></input>
                     {idChecker === true || idChecker === false ? null : <label className="accWarning">{idChecker}</label>}
+                    </div>
+                    <div className="inputDiv">
                     <i className="fa fa-key accIcon"></i>
                     <input className="accountInput" name="password" onChange={this.onChange} placeholder="비밀번호"></input>
                     <i className="fa fa-key accIcon"></i>
                     <input className="accountInput" name="password_v" onChange={this.onChange} placeholder="비밀번호 재확인"></input>
                     {passwordChecker === true || passwordChecker === false ? null : <label className="accWarning">{passwordChecker}</label>}
+                    </div>
+                    <div className="inputDiv">
                     <i className="fa fa-envelope accIcon"></i>
                     <input className="accountInput" name="email" onChange={this.onChange} placeholder="이메일"></input>
                     {emailChecker === true || emailChecker === false ? null : <label className="accWarning">{emailChecker}</label>}
-                    <TermsPage termsAgreeAll={this.termsAgreeAll}></TermsPage>
-                    <div class="col" onClick={this.signUp}>
-			            <a href="#" class="btn btn-dark-blue" >회원 가입</a>		
+                    </div>
+                    <TermsPage termStatus={termsAgreeAll}termsAgreeAll={this.termsAgreeAll}></TermsPage>
+                    <div className="col" onClick={this.signUp}>
+			            <button className="btn btn-dark-blue" >회원 가입</button>		
 		            </div>
                 </div>
             </div>

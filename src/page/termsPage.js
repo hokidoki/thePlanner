@@ -17,8 +17,6 @@ export default class TermsPage extends Component {
     agreeTerm = (index) => {
         const agree = this.state.terms[index].agree === true ? -1 : 1;
         const agrees = agree + this.state.agrees;
-        console.log(index)
-        console.log(this.state.terms.slice(0,0));
         this.setState({
             agrees : agrees,
             terms : [...this.state.terms.slice(0,index),{
@@ -41,14 +39,15 @@ export default class TermsPage extends Component {
             return {
                 title : item.title,
                 term : item.term,
-                agree : true,
+                agree : !this.props.termStatus,
             }
         })
 
         this.setState({
-            agrees : 2,
+            agrees : this.props.termStatus === false ? 2 : 0,
             terms : terms
         })
+
         this.props.termsAgreeAll()
     }
     render() {
