@@ -1,6 +1,5 @@
-import axios from 'axios';
+import {instanceWithCredential } from '../../settingModule/axios';
 import { createAction } from 'redux-action'; 
-
 import * as type from './actionType';
 
 const signInRequest = createAction(type.SIGN_IN_REQUEST);
@@ -10,13 +9,14 @@ const signInFailed = createAction(type.SIGN_IN_FAILED);
 export const signIn = (id,password) =>{
     return (dispatch,getState) =>{
         dispatch(signInRequest())
-        axios.post(`${getState().pub.requestDomain}/signIn`,{
-            userId : id,
-            userPassword : password
+        instanceWithCredential.post(`${getState().pub.requestDomain}/signIn`,{
+            id : id,
+            pw : password
         }).then((result)=>{
+            console.log(result)
             dispatch(signInSuccess(result.data))
         }).catch((err)=>{
-            console.log(err.response.data);
+            console.log(err);
             dispatch(signInFailed(err))
         })
     }
@@ -25,18 +25,30 @@ export const signIn = (id,password) =>{
 const signUpRequest = createAction(type.SIGN_UP_REQUEST);
 const signUpSuccess = createAction(type.SIGN_UP_SUCCESS);
 const signUpFailed = createAction(type.SIGN_UP_FAILED);
+const signUpValidFailed = createAction(type.SIGN_UP_VALID_FAILED);
 
-export const signUp = (id, password, nickname, email, terms) =>{
+export const signUp = (id, password, nickname, email, termsStatus) =>{
     return (dispatch,getState) =>{
         dispatch(signUpRequest());
-        axios.post(`${getState().pub.requestDomain}/signup`,{
+        instanceWithCredential.post(`${getState().pub.requestDomain}/signup`,{
             id : id,
             password : password,
             nickname : nickname,
             email : email,
-            terms : terms
-        }).then(()=>{
-            dispatch(signUpSuccess());
+            termsStatus : termsStatus
+        },{
+            headers : {
+                cookies : {
+                    userToken : localStorage.getItem('userToken')
+                }
+            }
+        }).then((result)=>{
+            console.log(result);
+            if(result.data.id.valid === false || result.data.email.valid === false){
+                dispatch(signUpValidFailed(result.data));
+            }else{
+                dispatch(signUpSuccess());
+            }
         }).catch((err)=>{
             dispatch(signUpFailed(err));
         })

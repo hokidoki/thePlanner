@@ -4,7 +4,7 @@ import { createStore, combineReducers,applyMiddleware,compose } from 'redux';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 //리듀서
 import pub from './reducer/public';
-
+import account from './reducer/account/index';
 
 export function configureStore(history){
     const middleware = applyMiddleware(thunk,routerMiddleware(history));
@@ -19,7 +19,8 @@ export function configureStore(history){
     return createStore(
         combineReducers({ 
             router : connectRouter(history),
-            pub
+            pub,
+            account
         }),
         composed
     )

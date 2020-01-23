@@ -1,12 +1,39 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import TermsPage from '../page/termsPage';
 import { withRouter } from 'react-router-dom';
+import TermsPage from '../page/termsPage';
+import { signUp } from '../store/action/account';
+import { bindActionCreators } from 'redux';
 
 
 class signUpForm extends Component {
-    
+
+
+    componentDidUpdate(prevProps, prevState, snapshot){
+        if(this.props.error.status === true){
+            console.log(prevProps);
+            console.log(this.props);
+            const {id , email } = prevProps.error.reson;
+            let idChecker = true;
+            let emailChecker = true;
+            
+            if(this.props.error.reson.id.valid !== id.valid || this.props.error.reson.email.valid !== email.valid ){
+                if(this.props.error.reson.id.valid === false){
+                    idChecker = "중복된 아이디 입니다.";
+                }
+
+                if(this.props.error.reson.email.valid === false){
+                    emailChecker = "중복된 이메일 입니다.";
+                }
+                this.setState({
+                    idChecker : idChecker,
+                    emailChecker : emailChecker
+                })
+            }
+        }
+    }
+
     state = {
         id : "",
         idChecker : false,
@@ -19,18 +46,17 @@ class signUpForm extends Component {
         emailChecker : false,
         termsAgreeAll : false,
     }
+
     termsAgreeAll = ()=>{
         this.setState({
             termsAgreeAll : !this.state.termsAgreeAll,
         })
     }
 
-
     emailChecker = (email) =>{
     const regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     return (email !== '' && email !== 'undefined' && regex.test(email));
     }
-    
 
     onChange = (e)=>{
         let checker = "";
@@ -50,7 +76,8 @@ class signUpForm extends Component {
                 id : e.target.value
             }).then((result)=>{
                 let checker = true;
-                if(result.data.valid === 1){
+                console.log(result);
+                if(result.data.id.valid === false){
                     checker = "중복된 아이디 입니다.";
                 }
                 this.setState({
@@ -59,6 +86,11 @@ class signUpForm extends Component {
                 })
             })
             return;
+        }
+
+        if(e.target.name === 'id' && e.target.value.length < 4){
+            checker = "idChecker";
+            checkerValue = "아이디는 영어 소문자 5글자 이상입니다.";
         }
 
         if(e.target.name === "nickname"){
@@ -100,7 +132,7 @@ class signUpForm extends Component {
         const { id, password, nickname, email, termsAgreeAll} = this.state;
         let {idChecker, passwordChecker, nicknameChecker, emailChecker} = this.state;
         
-        if(id.length > 4){
+        if(id.length < 4){
             idChecker = "아이디는 영어 소문자 5글자 이상 입니다."
         }else if(idChecker !== true){
             idChecker = "아이디 중복확인을 해주세요";
@@ -116,13 +148,14 @@ class signUpForm extends Component {
             nicknameChecker = true;
         }
 
-        if(emailChecker !== true){
+        if(emailChecker !== true && emailChecker !== '중복된 이메일 입니다.'){
             emailChecker ="이메일 양식에 맞게 작성해주세요."
         }
+        console.log(this.state);    
 
 
         if(idChecker === true && passwordChecker === true && nicknameChecker === true && emailChecker === true && termsAgreeAll === true){
-            alert("회원가입 승인");
+            this.props.signUp(id,password,nickname,email,termsAgreeAll);
         }else{
             this.setState({
                 idChecker : idChecker,
@@ -172,10 +205,15 @@ class signUpForm extends Component {
         )
     }
 }
-
-const mapStateToProps = (state)=>{
+const mapDispatchToProps =(dispatch)=>{
     return {
-        request : state.pub.requestDomain
+        signUp : bindActionCreators(signUp,dispatch)
     }
 }
-export default connect(mapStateToProps, null)(withRouter(signUpForm))
+const mapStateToProps = (state)=>{
+    return {
+        request : state.pub.requestDomain,
+        error : state.account.signUp.error
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(signUpForm))
