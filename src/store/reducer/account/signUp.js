@@ -18,7 +18,17 @@ const initialState = {
 
 export default handleActions({
     [type.SIGN_UP_REQUEST] : (state) => Object.assign({},state,{isLoading : true, error : state.error}),
-    [type.SIGN_UP_SUCCESS] : (state) => Object.assign({},state,{ isLoading : false, error : null}),
+    [type.SIGN_UP_SUCCESS] : (state) => Object.assign({},state,{ isLoading : false, error : {
+        status : false,
+        reson : {
+            id : {
+                valid : null,
+            },
+            email :{
+                valid : null,
+            }
+        }
+    }}),
     [type.SIGN_UP_FAILED] : (state,action) => Object.assign({},state,{isLoading : false, error : { 
         reson : state.error.reson,
         status : true,
