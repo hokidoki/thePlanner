@@ -3,27 +3,45 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import querystring from 'querystring';
 import { instanceWithCredential } from '../settingModule/axios';
- class VerifyEmailPage extends Component {
+class VerifyEmailPage extends Component {
 
     componentDidMount(){
         const { request } = this.props;
         const email = this.props.match.params.email;
         const secretCode = querystring.parse(this.props.location.search.replace('?',""),{ ignoreQueryPrefix: true }).secretcode
-        instanceWithCredential.get(`http://${request}/signUp/verify/${email}?secretcode=${secretCode}`).then((validationResult)=>{
-            if(validationResult.data.success === true){
-                instanceWithCredential.put(`http://${request}/signUp/verify/${email}`).then((authReqResult)=>{
-
+        instanceWithCredential.get(`${request}/signUp/verify/${email}?secretcode=${secretCode}`).then((validationResult)=>{
+            console.log(validationResult);
+            if(validationResult.data.verify === true){
+                instanceWithCredential.put(`${request}/signUp/verify`).then((authReqResult)=>{
+                    console.log(authReqResult)
+                    if(authReqResult.data.autentication === true){
+                        this.setState({
+                            isLoding : false,
+                            successAuthentication: true,
+                            alreadyAuthenticatedAccount : false
+                        })
+                    }
                 }).catch((err)=>{
-                    
+                    //디스패치 fatalError하도록 하자. 
                 })
             }else{
-                
+                this.setState({
+                    isLoding : false,
+                    successAuthentication: false,
+                    alreadyAuthenticatedAccount : true
+                })
             }
         });
+    }
 
+    state = {
+        isLoding : true,
+        successAuthentication: false,
+        alreadyAuthenticatedAccount : false
     }
 
     render() {
+        console.log(this.state);
         return (
             <div>
                 이메일 페이지
