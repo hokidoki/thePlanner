@@ -26,6 +26,7 @@ const signUpRequest = createAction(type.SIGN_UP_REQUEST);
 const signUpSuccess = createAction(type.SIGN_UP_SUCCESS);
 const signUpFailed = createAction(type.SIGN_UP_FAILED);
 const signUpValidFailed = createAction(type.SIGN_UP_VALID_FAILED);
+export const signUpModalClose = createAction(type.SIGN_UP_MODAL_CLOSE);
 
 export const signUp = (id, password, nickname, email, termsStatus) =>{
     return (dispatch,getState) =>{

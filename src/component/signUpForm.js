@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import TermsPage from '../page/termsPage';
 import { signUp } from '../store/action/account';
 import { bindActionCreators } from 'redux';
-
+import { CircleSpinner } from "react-spinners-kit"
 
 class signUpForm extends Component {
 
@@ -201,6 +201,13 @@ class signUpForm extends Component {
 			            <button className="btn btn-dark-blue" >회원 가입</button>		
 		            </div>
                 </div>
+                {
+                    this.props.isLoading === true ? <div id="signUpIsLoading">
+                    <div className="circleSpinnerBox">
+                        <CircleSpinner></CircleSpinner>
+                    </div>
+                </div> : null
+                }
             </div>
         )
     }
@@ -213,7 +220,8 @@ const mapDispatchToProps =(dispatch)=>{
 const mapStateToProps = (state)=>{
     return {
         request : state.pub.requestDomain,
-        error : state.account.signUp.error
+        error : state.account.signUp.error,
+        isLoading : state.account.signUp.isLoading
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(signUpForm))

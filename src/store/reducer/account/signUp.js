@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 import * as type from '../../action/actionType';
 
 const initialState = {
+    modal : false,
     isLoading : false,
     error : {
         status : false,
@@ -18,7 +19,7 @@ const initialState = {
 
 export default handleActions({
     [type.SIGN_UP_REQUEST] : (state) => Object.assign({},state,{isLoading : true, error : state.error}),
-    [type.SIGN_UP_SUCCESS] : (state) => Object.assign({},state,{ isLoading : false, error : {
+    [type.SIGN_UP_SUCCESS] : (state) => Object.assign({},state,{ modal : true, isLoading : false, error : {
         status : false,
         reson : {
             id : {
@@ -38,4 +39,5 @@ export default handleActions({
         reson : action.payload,
         status : true,
     }}),
+    [type.SIGN_UP_MODAL_CLOSE] : (state) => Object.assign({},state,{ modal : false})
 }, initialState)
