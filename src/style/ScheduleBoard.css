@@ -1,0 +1,16 @@
+#SchedulBoardPage{
+    font-family: Tahoma;
+    width: 88%;
+    height: 70%;
+    background-color: white;
+    position: relative;
+    top: 15%;
+    left : 6%;
+    display: flex;
+}
+
+#dummyDiv{
+    flex-basis: 20%;
+    min-width: 250px;
+    background-color: blue;
+}
