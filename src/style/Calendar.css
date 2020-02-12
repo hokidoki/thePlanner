@@ -1,34 +1,17 @@
 #calendarContainer{
       font-family: Tahoma;
-      flex-basis: 80%;
+      flex-grow: 1;
       background-color: white;
       position: relative;
       display: flex;
       flex-direction: column;
 }
 
-#calendarHeader{
-  height: 40px;
-  line-height: 40px;
-  padding-left: 10px;
-  border-bottom: gray 1px solid;
-}
-
-#calendarYearMonth{
-  color: #8e352e;
-  display: inline-block;
-}
-#calendarButtonContainer{
-  display: inline-block;
-  position: absolute;
-  right: 15px;
-}
 
 #dateOfWeek{
   flex-grow: 1;
   display: flex;
   flex-wrap: wrap;
-
   /* background-color: gray;   */
 }
 #week{
@@ -49,17 +32,23 @@
   position: relative;
   border-bottom: 1px solid black;
   border-right: 1px solid black;
+  cursor: pointer;
 }
 
-.dateContainner .dateBox{
+
+
+.dummy{
+  color: #adadadb6;
+  color: rgba(122, 126, 100, 0.87);
+}
+
+.dateBox{
   text-align: center;
-  width: 27px;
-  height: 27px;
+  /* width: 27px; */
+  /* height: 27px; */
   margin-bottom: 5px;
-  background-color: #333;
-  color: white;
+  color:  #8e352e;
   padding: 4px;
-  border-radius: 50%;
   position: absolute;
   top: 2px;
   right: 3px;

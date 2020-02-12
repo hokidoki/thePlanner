@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component,Fragment } from 'react'
 import moment from 'moment';
 
 import Callendar from '../component/callendar';
+import BoardHeader from '../component/scheduleBoard/scheduleBoard';
 
 import '../style/ScheduleBoard.css'
 
@@ -25,9 +26,9 @@ class ScheduleBoardPage extends Component {
     }
     render() {
         return (
-            <div id="SchedulBoardPage"> 
+            <div className="boardMain">
+                <BoardHeader nextMonth={this.nextMonth} prevMonth={this.prevMonth}firstDayOfThisMonth={this.state.firstDayOfThisMonth}></BoardHeader>
                 <Callendar firstDayOfThisMonth={this.state.firstDayOfThisMonth}></Callendar>
-                <div id="dummyDiv"></div>
             </div>
         )
     }

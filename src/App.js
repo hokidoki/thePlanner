@@ -4,8 +4,9 @@ import {Switch, Route} from 'react-router-dom';
 import LoginPage from './page/loginPage';
 import SignUpPage from './page/signUpPage';
 import VerifyEmailPage from './page/verifyEmailPage';
+import MainPage from './page/mainPage';
+
 import './style/App.css';
-import ScheduleBoardPage from './page/scheduleBoardPage';
 
 export default class App extends Component {
   render() {
@@ -15,7 +16,7 @@ export default class App extends Component {
           <Route path="/" exact component={LoginPage}/>          
           <Route path="/signUp" exact component={SignUpPage}/>
           <Route path="/verify/:email" exact component={VerifyEmailPage}/>
-          <Route path="/main" component={ScheduleBoardPage} />
+          <Route path="/main" component={MainPage} />
         </Switch>
       </div>
     )

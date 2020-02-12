@@ -5,6 +5,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 //리듀서
 import pub from './reducer/public';
 import account from './reducer/account/index';
+import callendar from './reducer/schedule/callendar';
 
 export function configureStore(history){
     const middleware = applyMiddleware(thunk,routerMiddleware(history));
@@ -20,7 +21,8 @@ export function configureStore(history){
         combineReducers({ 
             router : connectRouter(history),
             pub,
-            account
+            account,
+            callendar
         }),
         composed
     )

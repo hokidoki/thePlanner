@@ -2,6 +2,8 @@ import {instanceWithCredential } from '../../settingModule/axios';
 import { createAction } from 'redux-action'; 
 import * as type from './actionType';
 
+import * as callendar from './callendar';
+
 const signInRequest = createAction(type.SIGN_IN_REQUEST);
 const signInSuccess = createAction(type.SIGN_IN_SUCCESS);
 const signInFailed = createAction(type.SIGN_IN_FAILED);
@@ -14,7 +16,8 @@ export const signIn = (id,password) =>{
             pw : password
         }).then((result)=>{
             console.log(result)
-            dispatch(signInSuccess(result.data))
+            dispatch(signInSuccess(result.data));
+            dispatch(callendar.getCallendar(id));
         }).catch((err)=>{
             console.log(err);
             dispatch(signInFailed(err))
