@@ -3,14 +3,15 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
 import moment from 'moment'
 import queryString from 'query-string';
-import ArticleHeader from '../component/scheduleBoard/ArticleHeader';
-import NoneArticle from '../component/scheduleBoard/noneArticle';
-
-class ArticlePage extends Component {
+import ArticleHeader from '../../component/scheduleBoard/ArticleHeader';
+import MemoEditor from '../../component/editor/memoEditor';
+import '../../style/editor.css';
+class EditorPage extends Component {
 
     state = {
-        id : null,
+        mode : null,
         date : null,
+        editorHtml : '',
         mounted : false
     }
 
@@ -18,11 +19,11 @@ class ArticlePage extends Component {
         try{
             const {match, location} = this.props;
             const date = queryString.parse(location.search).date.replace(/_/gi,"-");
-            const id = match.params.id;
+            const mode = match.params.mode;
             const momentedDate = moment(date).clone();
-            console.log(match.params.id)
+            console.log(match.params.mode)
             this.setState({
-                id : id,
+                mode : mode,
                 date : momentedDate,
                 mounted : true
             })
@@ -31,7 +32,9 @@ class ArticlePage extends Component {
         }
     }
 
-    
+    handleChange = (html) => {
+        this.setState({ editorHtml: html });
+    }
         
     render() {
         const {location} = this.props;
@@ -39,12 +42,11 @@ class ArticlePage extends Component {
         const momentedDate = moment(date).clone();
         return (
             <div className="boardMain">
-                <ArticleHeader articleDate={momentedDate}></ArticleHeader>
-                {/* <NoneArticle></NoneArticle> */}
-
+                <ArticleHeader articleDate={momentedDate} ></ArticleHeader>
+                <MemoEditor editorHtml={this.state.editorHtml} handleChange={this.handleChange}></MemoEditor>
             </div>
         )
     }
 }
 
-export default connect(null,null)(withRouter(ArticlePage))
+export default connect(null,null)(withRouter(EditorPage))
