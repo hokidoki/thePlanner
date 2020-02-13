@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import ReactQuill,{Quill} from 'react-quill'; 
+import ReactQuill, { Quill } from 'react-quill';
 import '../../style/quill.snow.css'
-import { ImageResize } from 'quill-image-resize-module';
-
+import ImageResize from 'quill-image-resize-module';
 Quill.register('modules/ImageResize', ImageResize);
+
 export default class MemoEditor extends Component {
 
     state = {
