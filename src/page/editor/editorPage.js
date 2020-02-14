@@ -41,7 +41,7 @@ class EditorPage extends Component {
         const date = queryString.parse(location.search).date.replace(/_/gi,"-");
         const momentedDate = moment(date).clone();
         return (
-            <div className="boardMain">
+            <div className="boardMain editorPage">
                 <ArticleHeader articleDate={momentedDate} ></ArticleHeader>
                 <MemoEditor editorHtml={this.state.editorHtml} handleChange={this.handleChange}></MemoEditor>
             </div>

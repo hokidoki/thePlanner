@@ -3,3 +3,8 @@
     max-height: 600px;
     min-height: 200px;
 }
+
+.editorPage{
+    max-width: 1442px;
+    flex-basis: 80%;
+}
