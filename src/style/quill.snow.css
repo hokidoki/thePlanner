@@ -4,19 +4,27 @@
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
  */
-.quill{
+ .quill{
   height: 100%;
-  /* overflow-y:  auto; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* position: static; */
+  /* overflow-y:  hidden; */
 }
+
+/* .ql-tooltip + div {
+  overflow-y: hidden;
+} */
+
 
 .ql-container {
   box-sizing: border-box;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 13px;
-  height: 100%;
+  height: 90%;
   margin: 0px;
   position: relative;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 .ql-container.ql-disabled .ql-tooltip {
   visibility: hidden;
@@ -47,6 +55,7 @@
   text-align: left;
   white-space: pre-wrap;
   word-wrap: break-word;
+  overflow-y: auto;
 }
 .ql-editor > * {
   cursor: text;
@@ -543,6 +552,7 @@
 .ql-snow .ql-tooltip {
   position: absolute;
   transform: translateY(10px);
+  overflow: hidden;
 }
 .ql-snow .ql-tooltip a {
   cursor: pointer;
